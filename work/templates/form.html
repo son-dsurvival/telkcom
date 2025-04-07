@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background-color: #f8f9fa;
+        padding: 20px;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    h2 {
+        color: #2c3e50;
+        text-align: center;
+        margin-bottom: 25px;
+        font-size: 2rem;
+        border-bottom: 2px solid #3498db;
+        padding-bottom: 10px;
+    }
+
+    /* Form container */
+    form {
+        background-color: white;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Form paragraphs */
+    form p {
+        margin-bottom: 15px;
+    }
+
+    /* Name and Age fields */
+    input[name="name"],
+    input[name="Age"] {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+
+    /* Symptom checkboxes container */
+    .symptoms-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 15px;
+        margin-bottom: 25px;
+    }
+
+    /* Individual symptom checkbox styling */
+    .symptom-option {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        background-color: #f8f9fa;
+        border-radius: 4px;
+        transition: all 0.2s;
+    }
+
+    .symptom-option:hover {
+        background-color: #e9f5ff;
+    }
+
+    .symptom-option input[type="checkbox"] {
+        margin-right: 10px;
+        width: 18px;
+        height: 18px;
+        accent-color: #3498db;
+    }
+
+    .symptom-option label {
+        font-weight: normal;
+        margin-bottom: 0;
+        cursor: pointer;
+        flex-grow: 1;
+    }
+
+    /* Pregnancy and special fields */
+    input[name="Pregnancy"],
+    input[name="Injury concerning bone"] {
+        width: auto;
+        margin-right: 10px;
+    }
+
+    /* Submit button */
+    button[type="submit"] {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 14px 28px;
+        font-size: 18px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        display: block;
+        width: 100%;
+        font-weight: 600;
+        margin-top: 20px;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #2980b9;
+    }
+
+    /* Field groupings */
+    .field-group {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .field-group h3 {
+        color: #3498db;
+        margin-bottom: 15px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .symptoms-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        body {
+            padding: 10px;
+        }
+        
+        form {
+            padding: 20px;
+        }
+    }
+
+    /* Special styling for age input */
+    input[name="Age"] {
+        max-width: 100px;
+    }
+        </style>
+    </head>
+    <body>
+    <h2>Medical Symptom Checker</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div class="field-group">
+            <h3>Personal Information</h3>
+            <p>
+                <label for="id_name">Name:</label>
+                {{ form.name }}
+            </p>
+            <p>
+                <label for="id_Age">Age:</label>
+                {{ form.Age }}
+            </p>
+        </div>
+        
+        <div class="field-group">
+            <h3>Symptoms</h3>
+            <div class="symptoms-grid">
+                {% for field in form %}
+                    {% if field.name not in 'name,Age,Pregnancy' %}
+                    <div class="symptom-option">
+                        
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        
+        <div class="field-group">
+            <h3>Special Conditions</h3>
+            <div class="symptom-option">
+                
+                <label for="{{ form.Pregnancy.id_for_label }}">Pregnancy</label>
+                {{ form.Pregnancy }}
+            </div>
+        </div>
+        
+        <button type="submit">Submit Symptoms</button>
+    </form>
+    </body>
+</html>

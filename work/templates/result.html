@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Health Prediction Result</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .result { padding: 20px; border: 1px solid #ddd; border-radius: 5px; margin-top: 20px; }
+        .prediction { font-size: 24px; color: #333; }
+        .webhook { margin-top: 20px; padding: 10px; background-color: #f0f0f0; border-radius: 5px; }
+        button { padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Health Prediction Result</h1>
+    
+    <div class="result">
+        <p>Name: <strong>{{ name }}</strong></p>
+        <p>Age: <strong>{{ age }}</strong></p>
+        <p>Predicted Condition: <span class="prediction">{{ result }}</span></p>
+    </div>
+    <a href="/"><button>Check Another</button></a>
+</body>
+</html>
